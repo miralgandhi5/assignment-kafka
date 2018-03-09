@@ -15,7 +15,7 @@ object StudentConsumer {
     props.put("value.serializer", "src/main/scala/StudentSerializer.scala")
     props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     props.put("value.deserializer", "edu.knoldus.serialization.StudentDeserializer")
-    props.put("group.id", "something")
+    props.put("group.id", "studentGroup")
     props.put("auto.offset.reset", "earliest")
     val consumer = new KafkaConsumer[String, String](props)
     consumer.subscribe(Collections.singletonList("students"))
