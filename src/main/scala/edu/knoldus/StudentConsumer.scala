@@ -6,15 +6,15 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 
 import scala.collection.JavaConverters._
 
-class StudentConsumer {
+object StudentConsumer {
   def main(args: Array[String]): Unit = {
 
     val props = new Properties
     props.put("bootstrap.servers", "localhost:9092")
-    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+    props.put("key.serializer", "edu.knoldus.serialization.StudentSerializer")
     props.put("value.serializer", "src/main/scala/StudentSerializer.scala")
     props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put("value.deserializer", "src/main/scala/StudentDeserializer.scala")
+    props.put("value.deserializer", "edu.knoldus.serialization.StudentDeserializer")
     props.put("group.id", "something")
     props.put("auto.offset.reset", "earliest")
     val consumer = new KafkaConsumer[String, String](props)
@@ -22,7 +22,7 @@ class StudentConsumer {
     while (true) {
       val records = consumer.poll(5000)
       for (record <- records.asScala)
-        println(record)
+        println(record.value())
 
 
     }
